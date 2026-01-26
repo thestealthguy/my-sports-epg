@@ -1,8 +1,8 @@
 name: Auto Clean Playlist
 on:
   schedule:
-    - cron: '30 0 * * *' # Runs at 00:30 UTC (just after your EPG update)
-  workflow_dispatch: # Allows you to run it manually
+    - cron: '30 0 * * *'
+  workflow_dispatch: 
 
 permissions:
   contents: write
@@ -26,6 +26,7 @@ jobs:
         run: |
           git config --global user.name "GitHub Action"
           git config --global user.email "action@github.com"
-          git add stealth_playlist.m3u
+          # This line tells the Robot to grab the file even if it's new
+          git add -A 
           git commit -m "Update Stealth Playlist" || echo "No changes to commit"
           git push
