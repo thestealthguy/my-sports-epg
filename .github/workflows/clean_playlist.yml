@@ -1,0 +1,31 @@
+name: Auto Clean Playlist
+on:
+  schedule:
+    - cron: '30 0 * * *' # Runs at 00:30 UTC (just after your EPG update)
+  workflow_dispatch: # Allows you to run it manually
+
+permissions:
+  contents: write
+
+jobs:
+  clean_m3u:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+          
+      - name: Run Cleaner Script
+        run: python playlist_cleaner.py
+        
+      - name: Save Cleaned Playlist
+        run: |
+          git config --global user.name "GitHub Action"
+          git config --global user.email "action@github.com"
+          git add stealth_playlist.m3u
+          git commit -m "Update Stealth Playlist" || echo "No changes to commit"
+          git push
