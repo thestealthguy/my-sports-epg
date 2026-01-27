@@ -1,9 +1,9 @@
 import urllib.request
 
-# 1. YOUR PROVIDER LINK (Change this to your actual link)
-m3u_url = "http://stealthpro.xyz/get?username=WAYNEGREERE&password=87DGL0&type=m3u_plus"
+# 1. YOUR PROVIDER LINK
+m3u_url = "YOUR_PROVIDER_LINK_HERE"
 
-# 2. THE ELITE SPORTS LIST (Cleans and prioritizes your channels)
+# 2. THE ELITE SPORTS LIST
 replacements = {
     "SPORTSNET ONTARIO": "Sportsnet Ontario", "SPORTSNET EAST": "Sportsnet East",
     "SPORTSNET WEST": "Sportsnet West", "SPORTSNET PACIFIC": "Sportsnet Pacific",
@@ -17,8 +17,14 @@ replacements = {
     "NBC SPORTS": "NBC Sports", "NHL NETWORK": "NHL Network", "MLB NETWORK": "MLB Network"
 }
 
-# 3. THE "BRAIN" (Cleans names and identifies Home/Away feeds)
+# 3. THE BRAIN (Now with Country Logic)
 def clean_channel_name(line):
+    # Only keep the line if it's from our Target Countries
+    # (Checking for US, USA, CA, CAN, UK, and GB)
+    targets = ["US", "USA", "CA", "CAN", "UK", "GB"]
+    if not any(country in line.upper() for country in targets):
+        return None # This tells the robot to delete the channel
+
     suffix = ""
     upper_line = line.upper()
     if "HOME" in upper_line:
@@ -28,13 +34,12 @@ def clean_channel_name(line):
 
     for key, value in replacements.items():
         if key in upper_line:
-            # Tag UK/Europe so they drop to the bottom of the list
             if "SKY" in upper_line or "VIAPLAY" in upper_line:
                 return f"{value} (UK/Backup)"
             return f"{value}{suffix}"
     return line
 
-# 4. THE "ROBOT" (Downloads, Filters, and Saves)
+# 4. THE ROBOT
 req = urllib.request.Request(m3u_url, headers={'User-Agent': 'Mozilla/5.0'})
 
 try:
@@ -45,21 +50,22 @@ try:
         f.write("#EXTM3U\n")
         for i in range(len(lines)):
             line = lines[i]
-            # Check if this line is a channel info line
             if line.startswith("#EXTINF") and (i + 1) < len(lines):
                 url_line = lines[i+1]
                 
-                # --- THE VOD FILTER ---
-                # This skips any line that is a Movie or TV Series
+                # SKIP MOVIES AND SERIES
                 if "/movie/" in url_line or "/series/" in url_line:
                     continue 
                 
-                # If it's not VOD, it's Live TV! Clean it and write it.
+                # CLEAN AND FILTER BY COUNTRY
                 cleaned_info = clean_channel_name(line)
-                f.write(cleaned_info + "\n")
-                f.write(url_line + "\n")
+                
+                # If cleaned_info is None, it means it wasn't a target country
+                if cleaned_info:
+                    f.write(cleaned_info + "\n")
+                    f.write(url_line + "\n")
 
-    print("Success! Created a lean, sports-focused playlist.")
+    print("Success! Your playlist is now lean, localized, and sports-ready.")
 
 except Exception as e:
     print(f"Error: {e}")
