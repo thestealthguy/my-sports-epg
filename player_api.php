@@ -1,10 +1,21 @@
 <?php
-// If the app is just logging in:
-if (!isset($_GET['action'])) {
-    echo '{"user_info":{"auth":1,"status":"Active","exp_date":"1735689600"},"server_info":{"url":"https://thestealthguy.github.io/my-sports-epg/","port":"443","https_port":"443","server_protocol":"https"}}';
+// 1. Get the username and password from the TV App
+$user = $_GET['username'];
+$password = $_GET['password'];
+$action = $_GET['action'];
+
+// 2. Your Provider's Base DNS (The main part of their link)
+$provider_dns = "http://stealthpro.xyz"; 
+
+// 3. If the app is just logging in
+if (!$action) {
+    $login_url = "$provider_dns/player_api.php?username=$user&password=$password";
+    $response = file_get_contents($login_url);
+    echo $response;
 } 
-// If the app is asking for the TV channels:
-elseif ($_GET['action'] == 'get_live_streams') {
-    header('Location: https://thestealthguy.github.io/my-sports-epg/get_live_streams.json');
+
+// 4. If the app wants the Live Streams, give it YOUR cleaned list
+if ($action == "get_live_streams") {
+    header("Location: https://thestealthguy.github.io/my-sports-epg/stealth_playlist.m3u");
 }
 ?>
