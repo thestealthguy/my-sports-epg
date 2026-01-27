@@ -1,30 +1,58 @@
-import os
+import urllib.request
 
-input_file = "my_channels.m3u"
-output_file = "stealth_playlist.m3u"
-
-# Mapping based on the Stealth-Quantum APK logic
-translation_map = {
-    "US ★ NHL NETWORK HD": "NHL Network",
-    "CA ★ Sportsnet One HD": "Sportsnet 1",
-    "CA ★ TSN 1 HD": "TSN 1",
-    "CA ★ RDS HD": "RDS",
-    "CA ★ TVA SPORTS HD": "TVA Sports",
-    "US ★ NHL GAME 01": "NHL 1",
-    "US ★ NHL GAME 02": "NHL 2"
+# 1. Your Master List of Elite Channels
+replacements = {
+    # Canadian National (All 11)
+    "SPORTSNET ONTARIO": "Sportsnet Ontario", "SPORTSNET EAST": "Sportsnet East",
+    "SPORTSNET WEST": "Sportsnet West", "SPORTSNET PACIFIC": "Sportsnet Pacific",
+    "SPORTSNET ONE": "Sportsnet ONE", "SPORTSNET 360": "Sportsnet 360",
+    "TSN 1": "TSN 1", "TSN 2": "TSN 2", "TSN 3": "TSN 3", "TSN 4": "TSN 4", "TSN 5": "TSN 5",
+    
+    # French Canadian
+    "RDS": "RDS", "RDS 2": "RDS 2", "TVA SPORTS": "TVA Sports", "TVA SPORTS 2": "TVA Sports 2",
+    
+    # Major Local Groups (NHL & MLB)
+    "BALLY SPORTS": "Bally Sports", "MSG": "MSG Network", "NESN": "NESN", 
+    "YES NETWORK": "YES Network", "SNY": "SNY", "MASN": "MASN", 
+    "MARQUEE": "Marquee Sports", "ROOT SPORTS": "Root Sports", 
+    "ALTITUDE": "Altitude Sports", "MONUMENTAL": "Monumental Sports",
+    "NBC SPORTS": "NBC Sports", "SPECTRUM SPORTSNET": "Spectrum SportsNet",
+    
+    # National Brands (The "Last Resort" search)
+    "NHL NETWORK": "NHL Network", "MLB NETWORK": "MLB Network",
+    "ESPN": "ESPN", "TNT": "TNT", "TBS": "TBS"
 }
 
-if not os.path.exists(input_file):
-    print(f"Error: {input_file} not found!")
-else:
-    with open(input_file, "r", encoding="utf-8") as f:
-        lines = f.readlines()
+def clean_channel_name(line):
+    # This part handles the "Home" and "Away" tags
+    suffix = ""
+    upper_line = line.upper()
+    if "HOME" in upper_line:
+        suffix = " [HOME FEED]"
+    elif "AWAY" in upper_line:
+        suffix = " [AWAY FEED]"
 
-    with open(output_file, "w", encoding="utf-8") as f:
-        for line in lines:
-            new_line = line
-            for provider_name, api_name in translation_map.items():
-                if provider_name in line:
-                    new_line = line.replace(provider_name, api_name)
-            f.write(new_line)
-    print(f"Successfully created {output_file}")
+    # This part applies your Elite names
+    for key, value in replacements.items():
+        if key in upper_line:
+            # If it's a UK channel, we move it to the bottom later
+            if "SKY" in upper_line or "VIAPLAY" in upper_line:
+                return f"{value} (UK/Backup)"
+            return f"{value}{suffix}"
+    
+    return line # If no match, keep the original name
+
+# --- The "Robot" part that actually processes the file ---
+# Update this URL to your provider's link
+m3u_url = "http://stealthpro.xyz/get.php?username=WAYNEGREER&password=87DGL0&type=m3u"
+
+with urllib.request.urlopen(m3u_url) as response:
+    lines = response.read().decode('utf-8').splitlines()
+
+with open("stealth_playlist.m3u", "w") as f:
+    for i, line in enumerate(lines):
+        if line.startswith("#EXTINF"):
+            cleaned = clean_channel_name(line)
+            f.write(cleaned + "\n")
+        else:
+            f.write(line + "\n")
