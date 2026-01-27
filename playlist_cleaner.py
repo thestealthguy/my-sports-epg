@@ -4,14 +4,16 @@ import re
 # 1. YOUR PROVIDER LINK
 m3u_url = "http://stealthpro.xyz/get.php?username=WAYNEGREER&password=87DGL0&type=m3u_plus"
 
-# 2. THE CATEGORY KEYWORDS (Updated to be more specific)
+# 2. YOUR APPROVED COUNTRIES (The Passport List)
+approved_countries = ["US", "USA", "CA", "CAN", "UK", "GB", "FR", "FRA", "AU", "AUS", "NZ"]
+
+# 3. THE CATEGORY KEYWORDS
 keywords = [
-    "CA SPORTS", "US SPORTS", "UK SPORTS", "SKY SPORTS", "CA GENERAL",
-    "TENNIS", "F1", "MOTOGP", "PPV", "NCAA", "NFL", "NBA", "NHL",
-    "MLB", "MILB", "MLS", "BALLY", "NBC LOCALS", "CBS LOCALS", "ABC LOCALS", 
-    "FOX LOCALS", "MY-CW", "ME TV", "HORSE RACING", "MATCHROOM", "EPL", 
-    "EFL", "FR SPORTS", "RMC SPORTS", "BEIN", "CANAL+", "LIGUE 1", 
-    "FR GENERALE", "VICTORY+", "RDS", "TSN", "SPORTSNET", "TVA SPORTS"
+    "SPORTS", "SKY SPORTS", "GENERAL", "TENNIS", "F1", "MOTOGP", "PPV", 
+    "NCAA", "NFL", "NBA", "NHL", "MLB", "MILB", "MLS", "BALLY", 
+    "LOCALS", "MY-CW", "ME TV", "HORSE RACING", "MATCHROOM", "EPL", 
+    "EFL", "RMC SPORTS", "BEIN", "CANAL+", "LIGUE 1", "VICTORY+", 
+    "RDS", "TSN", "SPORTSNET", "TVA SPORTS"
 ]
 
 def clean_channel_name(line, url_line):
@@ -19,17 +21,29 @@ def clean_channel_name(line, url_line):
     upper_url = url_line.upper()
     
     # --- GUARD 1: THE VOD KILLER ---
-    # If the URL looks like a movie file or a series, REJECT IT
     vod_indicators = ["/MOVIE/", "/SERIES/", ".MP4", ".MKV", ".AVI", ".MOV"]
     if any(x in upper_url for x in vod_indicators):
         return None
 
-    # --- GUARD 2: THE CATEGORY FILTER ---
-    # Must match one of our keywords
+    # --- GUARD 2: PASSPORT CONTROL (Country Filter) ---
+    # We check if the line starts with or contains our country codes
+    # This prevents TR (Turkey), PL (Poland), etc. from getting in.
+    has_passport = False
+    for country in approved_countries:
+        # Looks for codes like "US ", "US:", "US|", "[US]", or "US ❖"
+        patterns = [f"{country} ", f"{country}:", f"{country}|", f"[{country}]", f"{country} ❖"]
+        if any(p in upper_line for p in patterns):
+            has_passport = True
+            break
+    
+    if not has_passport:
+        return None
+
+    # --- GUARD 3: THE CATEGORY FILTER ---
     if not any(word in upper_line for word in keywords):
         return None
 
-    # --- GUARD 3: THE SPORTS GUIDE CLEANER ---
+    # --- GUARD 4: THE SPORTS GUIDE CLEANER ---
     suffix = ""
     if "HOME" in upper_line:
         suffix = " [HOME FEED]"
@@ -39,7 +53,6 @@ def clean_channel_name(line, url_line):
     name_match = re.search(r',([^,]+)$', line)
     if name_match:
         clean_name = name_match.group(1).strip()
-        # Strip out the junk symbols for a professional look
         clean_name = clean_name.replace("★", "").replace("❖", "").strip()
         return f"{clean_name}{suffix}"
     
@@ -59,14 +72,12 @@ try:
             line = lines[i]
             if line.startswith("#EXTINF") and (i + 1) < len(lines):
                 url_line = lines[i+1]
-                
                 cleaned_name = clean_channel_name(line, url_line)
-                
                 if cleaned_name:
                     f.write(f'#EXTINF:-1,{cleaned_name}\n')
                     f.write(url_line + "\n")
 
-    print("Success! VOD and Global Sports purged.")
+    print("Success! Verified passports for US, CA, UK, FR, AU, NZ.")
 
 except Exception as e:
     print(f"Error: {e}")
