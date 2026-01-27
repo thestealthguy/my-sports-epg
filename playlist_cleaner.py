@@ -1,7 +1,7 @@
 import urllib.request
 
 # 1. YOUR PROVIDER LINK
-m3u_url = "YOUR_PROVIDER_LINK_HERE"
+m3u_url = "http://stealthpro.xyz/get.php?username=WAYNEGREER&password=87DGL0&type=m3u_plus"
 
 # 2. THE ELITE SPORTS LIST
 replacements = {
