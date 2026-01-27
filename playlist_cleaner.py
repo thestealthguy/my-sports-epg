@@ -4,8 +4,10 @@ import re
 # 1. YOUR PROVIDER LINK
 m3u_url = "http://stealthpro.xyz/get.php?username=WAYNEGREER&password=87DGL0&type=m3u_plus"
 
-# 2. YOUR APPROVED COUNTRIES (The Passport List)
+# 2. THE PASSPORT CONTROL
 approved_countries = ["US", "USA", "CA", "CAN", "UK", "GB", "FR", "FRA", "AU", "AUS", "NZ"]
+# The "Deportation" List - These are blocked even if they have sports keywords
+banned_codes = ["LAT", "ES:", "SPAIN", "MEX", "ARG", "COL", "CHILE"]
 
 # 3. THE CATEGORY KEYWORDS
 keywords = [
@@ -25,12 +27,13 @@ def clean_channel_name(line, url_line):
     if any(x in upper_url for x in vod_indicators):
         return None
 
-    # --- GUARD 2: PASSPORT CONTROL (Country Filter) ---
-    # We check if the line starts with or contains our country codes
-    # This prevents TR (Turkey), PL (Poland), etc. from getting in.
+    # --- GUARD 2: BANNED CODES (Killing LAT/ES) ---
+    if any(code in upper_line for code in banned_codes):
+        return None
+
+    # --- GUARD 3: PASSPORT CONTROL (Country Filter) ---
     has_passport = False
     for country in approved_countries:
-        # Looks for codes like "US ", "US:", "US|", "[US]", or "US ❖"
         patterns = [f"{country} ", f"{country}:", f"{country}|", f"[{country}]", f"{country} ❖"]
         if any(p in upper_line for p in patterns):
             has_passport = True
@@ -39,11 +42,11 @@ def clean_channel_name(line, url_line):
     if not has_passport:
         return None
 
-    # --- GUARD 3: THE CATEGORY FILTER ---
+    # --- GUARD 4: THE CATEGORY FILTER ---
     if not any(word in upper_line for word in keywords):
         return None
 
-    # --- GUARD 4: THE SPORTS GUIDE CLEANER ---
+    # --- GUARD 5: THE SPORTS GUIDE CLEANER ---
     suffix = ""
     if "HOME" in upper_line:
         suffix = " [HOME FEED]"
@@ -77,7 +80,7 @@ try:
                     f.write(f'#EXTINF:-1,{cleaned_name}\n')
                     f.write(url_line + "\n")
 
-    print("Success! Verified passports for US, CA, UK, FR, AU, NZ.")
+    print("Success! Purged LAT channels and kept elite regions.")
 
 except Exception as e:
     print(f"Error: {e}")
