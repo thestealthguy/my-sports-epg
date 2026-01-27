@@ -42,11 +42,20 @@ def clean_channel_name(line):
     
     return line # If no match, keep the original name
 
-# --- The "Robot" part that actually processes the file ---
+# --- The "Disguised Robot" part ---
 # Update this URL to your provider's link
 m3u_url = "http://stealthpro.xyz/get.php?username=WAYNEGREER&password=87DGL0&type=m3u"
 
-with urllib.request.urlopen(m3u_url) as response:
+# This "headers" part is the disguise!
+req = urllib.request.Request(
+    m3u_url, 
+    data=None, 
+    headers={
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+    }
+)
+
+with urllib.request.urlopen(req) as response:
     lines = response.read().decode('utf-8').splitlines()
 
 with open("stealth_playlist.m3u", "w") as f:
