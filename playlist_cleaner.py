@@ -20,33 +20,43 @@ allowed_groups = [
     "FR LIGUE 1+", "FR GENERALE", "ALL GLOBAL LIVE SPORTS", "US VICTORY+"
 ]
 
-# 3. THE BRAIN
+# 3. THE BRAIN (Now with "Fuzzy" Group Matching)
 def process_channel(line):
     upper_line = line.upper()
     
-    # Check if the channel belongs to an allowed group
-    # This looks for group-title="CATEGORY NAME"
+    # 1. EXTRACT THE GROUP TITLE
+    # This finds whatever is inside the group-title=" " quotes
+    group_match = re.search(r'group-title="([^"]+)"', line, re.IGNORECASE)
+    if not group_match:
+        return None
+        
+    actual_group = group_match.group(1).upper()
+    
+    # 2. CHECK IF ANY OF OUR ALLOWED CATEGORIES ARE IN THAT TITLE
     found_group = False
     for group in allowed_groups:
-        if f'GROUP-TITLE="{group}' in upper_line:
+        # If your allowed group name (like "CA SPORTS") is found inside 
+        # the provider's group title (like "CA ❖ SPORTS"), it's a match!
+        if group.upper() in actual_group:
             found_group = True
             break
-    
+            
     if not found_group:
         return None
 
-    # Identify Home/Away for the Sports Guide
+    # 3. IDENTIFY HOME/AWAY
     suffix = ""
     if "HOME" in upper_line:
         suffix = " [HOME FEED]"
     elif "AWAY" in upper_line:
         suffix = " [AWAY FEED]"
 
-    # Clean the name (Optional: keep as is, but add Home/Away suffix)
-    # This extracts the channel name after the last comma
+    # 4. EXTRACT CHANNEL NAME
     name_match = re.search(r',([^,]+)$', line)
     if name_match:
         clean_name = name_match.group(1).strip()
+        # Remove any leading/trailing stars or symbols from the channel name
+        clean_name = clean_name.replace("★", "").strip()
         return f"{clean_name}{suffix}"
     
     return line
