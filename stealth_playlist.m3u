@@ -4757,9 +4757,9 @@ http://stealthpro.xyz:80/WAYNEGREER/87DGL0/529947
 http://stealthpro.xyz:80/WAYNEGREER/87DGL0/96200
 #EXTINF:-1,US  NFL REDZONE HD {BK}
 http://stealthpro.xyz:80/WAYNEGREER/87DGL0/1287660
-#EXTINF:-1,US  NFL 01: 3PM Patriots at Broncos
+#EXTINF:-1,US  NFL 01:
 http://stealthpro.xyz:80/WAYNEGREER/87DGL0/96053
-#EXTINF:-1,US  NFL 02: 6:30PM Rams at Seahawks
+#EXTINF:-1,US  NFL 02:
 http://stealthpro.xyz:80/WAYNEGREER/87DGL0/96054
 #EXTINF:-1,US  NFL 03:
 http://stealthpro.xyz:80/WAYNEGREER/87DGL0/96055
@@ -5383,63 +5383,67 @@ http://stealthpro.xyz:80/WAYNEGREER/87DGL0/269825
 http://stealthpro.xyz:80/WAYNEGREER/87DGL0/269827
 #EXTINF:-1,US  NCAAB 25
 http://stealthpro.xyz:80/WAYNEGREER/87DGL0/269829
-#EXTINF:-1,US  NCAAF 01: Iowa State @ Cincinnati 12PM
+#EXTINF:-1,US  NCAAF 01:
 http://stealthpro.xyz:80/WAYNEGREER/87DGL0/269831
-#EXTINF:-1,US  NCAAF 02: Ohio @ Ball State 12PM
+#EXTINF:-1,US  NCAAF 02:
 http://stealthpro.xyz:80/WAYNEGREER/87DGL0/269833
-#EXTINF:-1,US  NCAAF 03: Kentucky @ Georgia 12pm
+#EXTINF:-1,US  NCAAF 03:
 http://stealthpro.xyz:80/WAYNEGREER/87DGL0/269835
-#EXTINF:-1,US  NCAAF 04: Wisconsin @ Michigan 12pm
+#EXTINF:-1,US  NCAAF 04:
 http://stealthpro.xyz:80/WAYNEGREER/87DGL0/269837
-#EXTINF:-1,US  NCAAF 05: Air Force @ Navy 12PM
+#EXTINF:-1,US  NCAAF 05:
 http://stealthpro.xyz:80/WAYNEGREER/87DGL0/269839
-#EXTINF:-1,US  NCAAF 06: Clemson @ North Carolina 12PM
+#EXTINF:-1,US  NCAAF 06:
 http://stealthpro.xyz:80/WAYNEGREER/87DGL0/269841
-#EXTINF:-1,US  NCAAF 07: Army @ UAB 12PM
+#EXTINF:-1,US  NCAAF 07:
 http://stealthpro.xyz:80/WAYNEGREER/87DGL0/269843
-#EXTINF:-1,US  NCAAF 08: Illinois @ Purdue 12PM
+#EXTINF:-1,US  NCAAF 08:
 http://stealthpro.xyz:80/WAYNEGREER/87DGL0/269845
-#EXTINF:-1,US  NCAAF 10: Oklahoma State @ Arizona 3PM
+#EXTINF:-1,US NCAAF 09:
+http://stealthpro.xyz:80/WAYNEGREER/87DGL0/269847
+#EXTINF:-1,US  NCAAF 10:
 http://stealthpro.xyz:80/WAYNEGREER/87DGL0/269849
-#EXTINF:-1,US NCAAF 11: Central Michigan vs San Jose State 10:30pm
+#EXTINF:-1,US NCAAF 11:
 http://stealthpro.xyz:80/WAYNEGREER/87DGL0/269851
-#EXTINF:-1,US  NCAAF 12: Boise State @  Notre Dame 3:30PM
+#EXTINF:-1,US  NCAAF 12:
 http://stealthpro.xyz:80/WAYNEGREER/87DGL0/269853
-#EXTINF:-1,US  NCAAF 13: Penn State @ UCLA 3:30PM
+#EXTINF:-1,US  NCAAF 13:
 http://stealthpro.xyz:80/WAYNEGREER/87DGL0/269855
-#EXTINF:-1,US  NCAAF 14: Texas @ Florida 3:30PM
+#EXTINF:-1,US  NCAAF 14:
 http://stealthpro.xyz:80/WAYNEGREER/87DGL0/269857
-#EXTINF:-1,US  NCAAF 15: Washington @ Maryland 3:30PM
+#EXTINF:-1,US  NCAAF 15:
 http://stealthpro.xyz:80/WAYNEGREER/87DGL0/269859
-#EXTINF:-1,US  NCAAF 16: Florida International @ Connecticut
+#EXTINF:-1,US  NCAAF 16:
 http://stealthpro.xyz:80/WAYNEGREER/87DGL0/269861
-#EXTINF:-1,US  NCAAF 17: Virginia @ Louisville 3:30PM
+#EXTINF:-1,US  NCAAF 17:
 http://stealthpro.xyz:80/WAYNEGREER/87DGL0/269863
-#EXTINF:-1,US  NCAAF 18: Syracuse @ SMU 3:30PM
+#EXTINF:-1,US  NCAAF 18:
 http://stealthpro.xyz:80/WAYNEGREER/87DGL0/269865
-#EXTINF:-1,US  NCAAF 19: Michigan State @ Nebraska 4PM
+#EXTINF:-1,US  NCAAF 19:
 http://stealthpro.xyz:80/WAYNEGREER/87DGL0/269867
-#EXTINF:-1,US  NCAAF 20: Texas State @ Arkansas State 4PM
+#EXTINF:-1,US  NCAAF 20:
 http://stealthpro.xyz:80/WAYNEGREER/87DGL0/269869
-#EXTINF:-1,US  NCAAF 21: Kent State @ Oklahoma 4PM
+#EXTINF:-1,US  NCAAF 21:
 http://stealthpro.xyz:80/WAYNEGREER/87DGL0/269871
 #EXTINF:-1,US NCAAF 22:
 http://stealthpro.xyz:80/WAYNEGREER/87DGL0/269893
-#EXTINF:-1,US  NCAAF 23: UNLV @ Wyoming 7PM
+#EXTINF:-1,US  NCAAF 23:
 http://stealthpro.xyz:80/WAYNEGREER/87DGL0/269895
-#EXTINF:-1,US  NCAAF 24: Miami (FL) @  Florida State 7:30PM
+#EXTINF:-1,US  NCAAF 24:
 http://stealthpro.xyz:80/WAYNEGREER/87DGL0/269897
-#EXTINF:-1,US  NCAAF 26: Minnesota @ Ohio State 7:30PM
+#EXTINF:-1,US  NCAAF 25:
+http://stealthpro.xyz:80/WAYNEGREER/87DGL0/269899
+#EXTINF:-1,US  NCAAF 26:
 http://stealthpro.xyz:80/WAYNEGREER/87DGL0/269901
-#EXTINF:-1,US  NCAAF 27: Kansas @ UCF 7:30PM
+#EXTINF:-1,US  NCAAF 27:
 http://stealthpro.xyz:80/WAYNEGREER/87DGL0/269903
-#EXTINF:-1,US  NCAAF 28: Mississippi State @ Texas A&M 7:45PM
+#EXTINF:-1,US  NCAAF 28:
 http://stealthpro.xyz:80/WAYNEGREER/87DGL0/269905
-#EXTINF:-1,US  NCAAF 29: Tulsa @ Memphis 8PM
+#EXTINF:-1,US  NCAAF 29:
 http://stealthpro.xyz:80/WAYNEGREER/87DGL0/269907
-#EXTINF:-1,US  NCAAF 30: Duke @ California 10:30PM
+#EXTINF:-1,US  NCAAF 30:
 http://stealthpro.xyz:80/WAYNEGREER/87DGL0/269909
-#EXTINF:-1,US  NCAAF 31: Nevada @ Fresno State 10:30PM
+#EXTINF:-1,US  NCAAF 31:
 http://stealthpro.xyz:80/WAYNEGREER/87DGL0/436375
 #EXTINF:-1,US  NCAAF 32:
 http://stealthpro.xyz:80/WAYNEGREER/87DGL0/436373
@@ -6449,9 +6453,11 @@ http://stealthpro.xyz:80/WAYNEGREER/87DGL0/981659
 http://stealthpro.xyz:80/WAYNEGREER/87DGL0/981661
 #EXTINF:-1,CA  TSN+ 1:
 http://stealthpro.xyz:80/WAYNEGREER/87DGL0/981263
-#EXTINF:-1,CA  TSN+ 2: LaLiga: Rayo Vallecano vs. Real Betis (2025-12-15 14:48:00)
+#EXTINF:-1,CA  TSN+ 2:
 http://stealthpro.xyz:80/WAYNEGREER/87DGL0/981265
-#EXTINF:-1,CA  TSN+ 4: Monday Night Football with Peyton and Eli: Dolphins vs. Steelers (2025-12-15 20:15:00)
+#EXTINF:-1,CA  TSN+ 3:
+http://stealthpro.xyz:80/WAYNEGREER/87DGL0/981267
+#EXTINF:-1,CA  TSN+ 4:
 http://stealthpro.xyz:80/WAYNEGREER/87DGL0/981269
 #EXTINF:-1,CA  TSN+ 5:
 http://stealthpro.xyz:80/WAYNEGREER/87DGL0/981271
